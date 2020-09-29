@@ -4,7 +4,7 @@ pipeline {
         stage('Clone') {
             steps {
                 echo "Repository Parsing"
-                git 'https://github.com/vathsalahn/jenkins-demo.git'
+                git 'https://github.com/chapinese100/jenkins-demo.git'
             
             }
         }
@@ -48,14 +48,14 @@ pipeline {
             parallel ( "JavaNcss Report":   
             {
               node('window'){
-                git 'https://github.com/vathsalahn/jenkins-demo.git'
+                git 'https://github.com/chapinese100/jenkins-demo.git'
                 sh "cd javancss-master ; mvn test javancss:report ; pwd"
                   }
             },
             "FindBugs Report" : {
             node('window'){
                 sh "mkdir javancss1 ; cd javancss1 ;pwd"
-                git 'https://github.com/vathsalahn/jenkins-demo.git'
+                git 'https://github.com/chapinese100/jenkins-demo.git'
                 sh "cd javancss-master ; mvn findbugs:findbugs ; pwd"
                 deleteDir()
                 }
@@ -65,7 +65,7 @@ pipeline {
             }
          post{
                 success {
-                    emailext body: 'Successfully completed pipeline project with archiving the artifacts', subject: 'Pipeline was successfull', to: 'vathsala.hn22@gmail.com'
+                    emailext body: 'Successfully completed pipeline project with archiving the artifacts', subject: 'Pipeline was successfull', to: 'ivan.gutierrez0908@gmail.com'
                 }
     }
 }
