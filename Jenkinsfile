@@ -3,26 +3,26 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                echo "checking out the repo"
+                echo "Repository Parsing"
                 git 'https://github.com/vathsalahn/jenkins-demo.git'
             
             }
         }
         stage('build'){
             steps {
-                echo "building the project"
+                echo "Project Building"
                 sh "cd MavenProject ; mvn clean install ; pwd"
             }
         }
         
-        stage('Archieve Artifacts'){
+        stage('Archiving Artifacts'){
             steps {
                 echo "archiving the artifacts"
                 archiveArtifacts 'MavenProject/multi3/target/*.war'
             }
             
         }
-        stage('Deployment') {
+        stage('Deployment Project') {
             // Deployment
             steps {
                 script {
@@ -31,13 +31,13 @@ pipeline {
                 }
             }
         }
-        stage('publish html report') {
+        stage('HTML Report Generation') {
             steps{
                 echo "publishing the html report"
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
             }
         }
-        stage('clean up') {
+        stage('Cleaning Up') {
             steps {
                 echo "cleaning up the workspace"
                 cleanWs()
